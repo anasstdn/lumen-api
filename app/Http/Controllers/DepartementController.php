@@ -26,7 +26,16 @@ class DepartementController extends Controller
                     ->limit($limit)
                     ->get();
 
-        $data['total'] = count(Departement::get());
+        $total_all = Departement::select('*')
+                    ->where(function($q) use($search){
+                        if(!empty($search))
+                        {
+                            $q->where('departement','LIKE','%'.$search.'%');
+                        }
+                    })
+                    ->get();
+
+        $data['total'] = count($total_all);
 
         return response()->json($data);
     }

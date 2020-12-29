@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Jabatan;
+use App\Models\JenisKelamin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 date_default_timezone_set("Asia/Jakarta");
 
-class JabatanController extends Controller
+class JenisKelaminController extends Controller
 {
     public function getData(Request $request)
     {
@@ -15,22 +15,22 @@ class JabatanController extends Controller
         $limit = $request->has('limit') ? $request->get('limit') : 10;
         $search = $request->has('search') ? $request->get('search') : null;
 
-        $data['data'] = Jabatan::select('*')
+        $data['data'] = JenisKelamin::select('*')
                     ->where(function($q) use($search){
                         if(!empty($search))
                         {
-                            $q->where('jabatan','LIKE','%'.$search.'%');
+                            $q->where('jenis_kelamin','LIKE','%'.$search.'%');
                         }
                     })
                     ->offset($offset)
                     ->limit($limit)
                     ->get();
 
-        $total_all = Jabatan::select('*')
+        $total_all = JenisKelamin::select('*')
                     ->where(function($q) use($search){
                         if(!empty($search))
                         {
-                            $q->where('jabatan','LIKE','%'.$search.'%');
+                            $q->where('jenis_kelamin','LIKE','%'.$search.'%');
                         }
                     })
                     ->get();
@@ -43,12 +43,12 @@ class JabatanController extends Controller
     public function create(Request $request)
     {
         $this->validate($request, [
-            'jabatan' => 'required|string',
+            'jenis_kelamin' => 'required|string',
             'flag_aktif' => 'required|string',
         ]);
 
-        $data = new Jabatan;
-        $data->jabatan= $request->jabatan;
+        $data = new JenisKelamin;
+        $data->jenis_kelamin= $request->jenis_kelamin;
         $data->flag_aktif= $request->flag_aktif;
         $data->created_at= date('Y-m-d H:i:s');
         $data->updated_at= date('Y-m-d H:i:s');
@@ -59,19 +59,19 @@ class JabatanController extends Controller
 
     public function edit($id)
     {
-        $data = Jabatan::find($id);
+        $data = JenisKelamin::find($id);
         return response()->json($data);
     }
 
     public function update(Request $request, $id)
      { 
         $this->validate($request, [
-            'jabatan' => 'required|string',
+            'jenis_kelamin' => 'required|string',
             'flag_aktif' => 'required|string',
         ]);
 
-        $data= Jabatan::find($id);
-        $data->jabatan = $request->input('jabatan');
+        $data= JenisKelamin::find($id);
+        $data->jenis_kelamin = $request->input('jenis_kelamin');
         $data->flag_aktif = $request->input('flag_aktif');
         $data->updated_at = date('Y-m-d H:i:s');
         $data->save();
@@ -80,7 +80,7 @@ class JabatanController extends Controller
 
      public function destroy($id)
      {
-        $data = Jabatan::find($id);
+        $data = JenisKelamin::find($id);
         $data->delete();
         return response()->json($data);
      }

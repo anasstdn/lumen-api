@@ -69,3 +69,21 @@ $router->group(['prefix'=>'api/v1','middleware' => 'auth:api'], function() use($
     $router->put('/departement/{id}/update', 'DepartementController@update');
     $router->delete('/departement/{id}', 'DepartementController@destroy');
 });
+
+$router->group(['prefix'=>'api/v1','middleware' => 'auth:api'], function() use($router){
+    // $router->get('/transaksi',['middleware' => 'auth', 'uses' => 'TransaksiController@index']);
+    $router->post('/jenis-kelamin/get-data','JenisKelaminController@getData');
+    $router->post('/jenis-kelamin/create', 'JenisKelaminController@create');
+    $router->get('/jenis-kelamin/{id}/edit', 'JenisKelaminController@edit');
+    $router->put('/jenis-kelamin/{id}/update', 'JenisKelaminController@update');
+    $router->delete('/jenis-kelamin/{id}', 'JenisKelaminController@destroy');
+});
+
+$router->group(['prefix'=>'api/v1','middleware' => 'auth:api'], function() use($router){
+    // $router->get('/transaksi',['middleware' => 'auth', 'uses' => 'TransaksiController@index']);
+    $router->post('/status-perkawinan/get-data','StatusPerkawinanController@getData');
+    $router->post('/status-perkawinan/create', 'StatusPerkawinanController@create');
+    $router->get('/status-perkawinan/{id}/edit', 'StatusPerkawinanController@edit');
+    $router->put('/status-perkawinan/{id}/update', 'StatusPerkawinanController@update');
+    $router->delete('/status-perkawinan/{id}', 'StatusPerkawinanController@destroy');
+});

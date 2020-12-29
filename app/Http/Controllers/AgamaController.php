@@ -26,7 +26,17 @@ class AgamaController extends Controller
                     ->limit($limit)
                     ->get();
 
-        $data['total'] = count(Agama::get());
+        // $data['total'] = count(Agama::get());
+        $total_all = Agama::select('*')
+                    ->where(function($q) use($search){
+                        if(!empty($search))
+                        {
+                            $q->where('agama','LIKE','%'.$search.'%');
+                        }
+                    })
+                    ->get();
+                    
+        $data['total'] = count($total_all);
 
         return response()->json($data);
     }
